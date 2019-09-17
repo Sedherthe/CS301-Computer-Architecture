@@ -20,12 +20,30 @@ public class RegisterWrite {
 		if(MA_RW_Latch.isRW_enable())
 		{
 			//TODO
+			System.out.println("Into the RW stage");
+			if(MA_RW_Latch.getIsEnd()) {
+				System.out.println("SimulationComplete");
+				// if instruction being processed is an end instruction, call Simulator.setSimulationComplete(true);
+				Simulator.setSimulationComplete(true);
+			}
+			else if(MA_RW_Latch.getIsBranch()) {
+				
+			}
+			else if(MA_RW_Latch.getIsLoad()) {
+				//Store the loadResult in specified register
+				containingProcessor.getRegisterFile().setValue(MA_RW_Latch.getRd(), MA_RW_Latch.getLoadResult());
+			}
+			else if(MA_RW_Latch.getIsALUResult()) {
+				System.out.println("This is Rd in RW: " + MA_RW_Latch.getRd());
+				containingProcessor.getRegisterFile().setValue(MA_RW_Latch.getRd(), MA_RW_Latch.getALUResult());
+				MA_RW_Latch.setIsALUResult(false);
+			}
 			
-			// if instruction being processed is an end instruction, remember to call Simulator.setSimulationComplete(true);
 			
 			MA_RW_Latch.setRW_enable(false);
 			IF_EnableLatch.setIF_enable(true);
 		}
+		System.out.println(containingProcessor.getRegisterFile().getContentsAsString());
 	}
 
 }

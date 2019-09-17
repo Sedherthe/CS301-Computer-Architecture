@@ -41,6 +41,7 @@ public class Simulator {
 			// Read the first 8 bytes of the file and set it to PC. (First Code Address)
 			mem_row = din.readInt();
 			Simulator.processor.getRegisterFile().setProgramCounter(mem_row);
+			System.out.println("Program Counter: "+ Simulator.processor.getRegisterFile().getProgramCounter());
 			
 			while(din.available() > 0) { // Checking how many more bytes can be read.
 				
@@ -50,7 +51,7 @@ public class Simulator {
 				address += 1; // Incrementing the address value.
 			}
 			
-			// Check out the contents of the main mem here.
+			// Check out the contents of the main mem here
 			String mem = Simulator.processor.getMainMemory().getContentsAsString(0, address-1);
 			System.out.println(mem);
 			
@@ -59,7 +60,9 @@ public class Simulator {
 			return;
 		}
 		
+		
 		// Now set the registers x1 and x2 as 65535.
+		Simulator.processor.getRegisterFile().setValue(0, 0);
 		Simulator.processor.getRegisterFile().setValue(1, 65535);
 		Simulator.processor.getRegisterFile().setValue(2, 65535);
 	}

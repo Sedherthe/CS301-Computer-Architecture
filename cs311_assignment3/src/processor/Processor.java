@@ -13,6 +13,7 @@ import processor.pipeline.OF_EX_LatchType;
 import processor.pipeline.OperandFetch;
 import processor.pipeline.RegisterFile;
 import processor.pipeline.RegisterWrite;
+import processor.pipeline.ALUnit;
 
 public class Processor {
 	
@@ -28,6 +29,7 @@ public class Processor {
 	
 	InstructionFetch IFUnit;
 	OperandFetch OFUnit;
+	ALUnit ALU;
 	Execute EXUnit;
 	MemoryAccess MAUnit;
 	RegisterWrite RWUnit;
@@ -45,8 +47,9 @@ public class Processor {
 		MA_RW_Latch = new MA_RW_LatchType();
 		
 		IFUnit = new InstructionFetch(this, IF_EnableLatch, IF_OF_Latch, EX_IF_Latch);
-		OFUnit = new OperandFetch(this, IF_OF_Latch, OF_EX_Latch);
-		EXUnit = new Execute(this, OF_EX_Latch, EX_MA_Latch, EX_IF_Latch);
+		ALU = new ALUnit(-1, false, false);
+		OFUnit = new OperandFetch(this, IF_OF_Latch, OF_EX_Latch, ALU);
+		EXUnit = new Execute(this, OF_EX_Latch, EX_MA_Latch, EX_IF_Latch, ALU,0);
 		MAUnit = new MemoryAccess(this, EX_MA_Latch, MA_RW_Latch);
 		RWUnit = new RegisterWrite(this, MA_RW_Latch, IF_EnableLatch);
 	}
@@ -92,6 +95,10 @@ public class Processor {
 
 	public RegisterWrite getRWUnit() {
 		return RWUnit;
+	}
+	
+	public ALUnit getALUnit() {
+		return ALU;
 	}
 
 }

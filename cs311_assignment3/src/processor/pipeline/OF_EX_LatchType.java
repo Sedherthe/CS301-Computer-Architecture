@@ -8,10 +8,12 @@ public class OF_EX_LatchType {
 	int rd;
 	int imm;
 	boolean is_imm;
+	boolean is_negative;
 
 	public OF_EX_LatchType()
 	{
 		EX_enable = false;
+		is_negative = false;
 	}
 
 	public boolean isEX_enable() {
@@ -60,5 +62,15 @@ public class OF_EX_LatchType {
 
 	public void setIs_imm(boolean is_imm) {
 		this.is_imm = is_imm;
+	}
+	public boolean isIs_negative() {
+		return is_negative;
+	}
+
+	public boolean getIs_negative() {
+		return is_negative;
+	}
+	public void setIs_negative(boolean is_neg) {
+		this.is_negative = is_neg;
 	}
 }
